@@ -25,7 +25,6 @@ ARG VCS_REF
 # Metadata
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="{{ cookiecutter.project_name }}" \
-      org.label-schema.description="{{ cookiecutter.project_desc }}" \
       org.label-schema.vcs-url=$VCS_URL \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vendor="{{ cookiecutter.vendor }}" \
