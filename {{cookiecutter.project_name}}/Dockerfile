@@ -1,6 +1,7 @@
-FROM nvidia/cuda
+FROM {{ cookiecutter.base_image }}
 MAINTAINER {{ cookiecutter.full_name }} {{ cookiecutter.email }}
 
+# Your build
 
 #ENV BUILD_PACKAGES ca-certificates
 
@@ -10,6 +11,7 @@ MAINTAINER {{ cookiecutter.full_name }} {{ cookiecutter.email }}
 
 #CMD ["/your-executable"]
 
+# ===== Metadata ======
 
 # Add Dockerfile
 COPY Dockerfile /
@@ -29,5 +31,5 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="{{ cookiecutter.vendor }}" \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0" \
-      com.{{ cookiecutter.vendor }}.docker.dockerfile="/Dockerfile"
+      com.{{ cookiecutter.vendor }}.{{ project_name }}.docker.dockerfile="/Dockerfile"
 
