@@ -18,7 +18,7 @@ CODE_VERSION = $(strip $(shell cat VERSION))
 # Find out if the working directory is clean
 GIT_NOT_CLEAN_CHECK = $(shell git status --porcelain)
 ifneq (x$(GIT_NOT_CLEAN_CHECK), x)
-DOCKER_TAG_SUFFIX = "-dirty"
+DOCKER_TAG_SUFFIX = -dirty
 endif
 
 # If we're releasing to Docker Hub, and we're going to mark it with the latest tag, it should exactly match a version release
