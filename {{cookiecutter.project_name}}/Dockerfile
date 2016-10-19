@@ -30,5 +30,5 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vendor="{{ cookiecutter.vendor }}" \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0" \
-      com.{{ cookiecutter.vendor }}.{{ project_name }}.docker.dockerfile="/Dockerfile"
+      com.{{ cookiecutter.vendor }}.{{ cookiecutter.project_name }}.docker.dockerfile="/Dockerfile"
 
