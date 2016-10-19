@@ -1,4 +1,4 @@
-default: test
+default: build
 
 # Build Docker image
 build: docker_build output
