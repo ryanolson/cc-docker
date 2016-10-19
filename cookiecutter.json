@@ -5,5 +5,5 @@
     "container_repo_name": "myorg/containerizr",
     "project_name": "{{ cookiecutter.container_repo_name|lower|replace('/', '-') }}",
     "vendor": "nvidia",
-    "base_image": "quay.nvdiia.com/dgx1/cuda"
+    "base_image": "quay.nvidia.com/dgx1/cuda"
 }
