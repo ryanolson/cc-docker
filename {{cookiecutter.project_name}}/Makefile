@@ -13,7 +13,7 @@ DOCKER_IMAGE ?= {{ cookiecutter.container_repo_host }}/{{ cookiecutter.container
 GIT_COMMIT = $(strip $(shell git rev-parse --short HEAD))
 
 # Get the version number from the code
-CODE_VERSION = $(strip $(shell cat VERSION))
+CODE_VERSION = $(strip $(shell python version.py))
 
 # Find out if the working directory is clean
 GIT_NOT_CLEAN_CHECK = $(shell git status --porcelain)
