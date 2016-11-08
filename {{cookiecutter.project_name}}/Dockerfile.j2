@@ -1,4 +1,4 @@
-FROM {{ cookiecutter.base_image }}
+FROM {{ build.base_image }}
 MAINTAINER {{ cookiecutter.full_name }} {{ cookiecutter.email }}
 
 # Your build
@@ -10,6 +10,10 @@ MAINTAINER {{ cookiecutter.full_name }} {{ cookiecutter.email }}
 #    rm -rf /var/lib/apt/lists/*
 
 #CMD ["/your-executable"]
+
+
+
+{% if build.is_release %}
 
 # ===== Metadata ======
 
@@ -31,4 +35,4 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0" \
       com.{{ cookiecutter.vendor }}.{{ cookiecutter.project_name }}.docker.dockerfile="/Dockerfile"
-
+{% endif %}
