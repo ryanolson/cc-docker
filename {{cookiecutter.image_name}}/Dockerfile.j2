@@ -1,0 +1,12 @@
+FROM {{ build.base_image }}
+MAINTAINER {{ cookiecutter.full_name }} {{ cookiecutter.email }}
+
+# Your build
+
+#ENV BUILD_PACKAGES ca-certificates
+
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends $BUILD_PACKAGES && \
+#    rm -rf /var/lib/apt/lists/*
+
+#CMD ["/your-executable"]
