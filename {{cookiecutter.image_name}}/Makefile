@@ -4,7 +4,7 @@ RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
 .PHONY: build release clean distclean
 
-default: {{ cookiecutter.image_name }}
+default: build
 
 Dockerfile: Dockerfile.j2
 	j2docker --base-image=${BASE_IMAGE} Dockerfile.j2
