@@ -3,7 +3,7 @@ IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
 ifdef APT_CACHE_SERVER
-    CACHES = --build-arg http_proxy=${APT_CACHE_SERVER}
+    CACHES = --build-arg http_proxy=http://${APT_CACHE_SERVER}
 else
     CACHES =
 endif
@@ -20,6 +20,11 @@ Dockerfile: Dockerfile.j2
 build: clean Dockerfile
 	docker build ${CACHES} -t ${IMAGE_NAME} . 
 
+singularity: build
+	docker run \
+	    -v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}:/output \
+	    --privileged -t --rm singularityware/docker2singularity ${IMAGE_NAME}
+
 release: build
 	docker tag ${IMAGE_NAME} ${RELEASE_IMAGE}
 	docker push ${RELEASE_IMAGE}
@@ -29,6 +34,7 @@ output:
 
 clean:
 	-@rm -f Dockerfile 2> /dev/null
+	-@rm -f *.img
 	-@docker rm -v `docker ps -a -q -f "status=exited"` 2> /dev/null
 	-@docker rmi `docker images -q -f "dangling=true"` 2> /dev/null
 
