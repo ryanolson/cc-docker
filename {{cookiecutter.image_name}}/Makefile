@@ -2,7 +2,15 @@ BASE_IMAGE ?= {{ cookiecutter.base_image }}
 IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
+ifdef APT_CACHE_SERVER
+    CACHES = --build-arg http_proxy=${APT_CACHE_SERVER}
+else
+    CACHES =
+endif
+
+
 .PHONY: build release clean distclean
+
 
 default: build
 
@@ -10,7 +18,7 @@ Dockerfile: Dockerfile.j2
 	j2docker --base-image=${BASE_IMAGE} Dockerfile.j2
 
 build: clean Dockerfile
-	docker build -t ${IMAGE_NAME} . 
+	docker build ${CACHES} -t ${IMAGE_NAME} . 
 
 release: build
 	docker tag ${IMAGE_NAME} ${RELEASE_IMAGE}
