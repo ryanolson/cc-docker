@@ -3,7 +3,7 @@ IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
 ifdef APT_CACHE_SERVER
-    CACHES = --build-arg http_proxy=http://${APT_CACHE_SERVER}
+    CACHES = --build-arg http_proxy=${APT_CACHE_SERVER}
 else
     CACHES =
 endif
