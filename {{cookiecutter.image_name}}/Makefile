@@ -14,9 +14,13 @@ Dockerfile: Dockerfile.j2
 build: Dockerfile
 	docker build ${CACHES} -t ${IMAGE_NAME} . 
 
-release: build
+tag: build
 	docker tag ${IMAGE_NAME} ${RELEASE_IMAGE}
+
+push: tag
 	docker push ${RELEASE_IMAGE}
+
+release: push
 
 clean:
 	@rm -f Dockerfile 2> /dev/null ||:
