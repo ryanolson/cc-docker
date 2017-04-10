@@ -2,6 +2,7 @@
     "full_name": "Ryan Olson",
     "email": "rolson@nvidia.com",
     "image_name": "image_name",
+    "image_version": "latest",
     "base_image": "nvidia/cuda",
-    "release_image": "ryanolson/{{ cookiecutter.image_name }}"
+    "release_image": "ryanolson/{{ cookiecutter.image_name }}:{{ cookiecutter.image_version }}"
 }
