@@ -8,7 +8,7 @@ else
   CACHES =
 endif
 
-.PHONY: build release clean distclean
+.PHONY: build tag push release clean distclean
 
 default: clean build
 
