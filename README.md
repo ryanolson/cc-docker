@@ -61,7 +61,8 @@ REPO=nvcr.io/nvida
 VERSION=17.03
 
 for IMAGE in $IMAGES; do
-  BASE_IMAGE=$REPO/$IMAGE:$VERSION IMAGE_NAME=my-$IMAGE:$VERSION \
+  BASE_IMAGE=$REPO/$IMAGE:$VERSION \
+  IMAGE_NAME=my-$IMAGE:$VERSION \
   RELEASE_IMAGE=registry.local/$IMAGE:$VERSION \
   make release
 done
@@ -70,7 +71,8 @@ done
 # Doing this after ensure that the base layers do not get downloaded repeatedly.
 
 for IMAGE in $IMAGES; do
-  BASE_IMAGE=$REPO/$IMAGE:$VERSION IMAGE_NAME=my-$IMAGE:$VERSION \
+  BASE_IMAGE=$REPO/$IMAGE:$VERSION \
+  IMAGE_NAME=my-$IMAGE:$VERSION \
   RELEASE_IMAGE=registry.local/$IMAGE:$VERSION \
   make distclean
 done
