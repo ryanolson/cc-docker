@@ -24,3 +24,21 @@ abbreviations:
   dockerfile: https://github.com/ryanolson/cc-docker.git
   gh: https://github.com/{0}.git
 ```
+
+```
+MBP:~ ryan$ cookiecutter dockerfile
+full_name [Ryan Olson]:
+email [rolson@nvidia.com]:
+image_name [image_name]: my-project
+base_image [nvcr.io/nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04]:
+release_image [nvcr.io/nvidian_sas/my-project]:
+MBP:~ ryan$ ls my-project/
+Dockerfile.j2  Makefile
+MBP:~ ryan$ cd my-project/
+MBP:my-project ryan$ make
+j2docker --base-image=nvcr.io/nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04 Dockerfile.j2
+docker build  -t my-project .
+Sending build context to Docker daemon  4.608kB
+Step 1/2 : FROM nvcr.io/nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
+...
+```
