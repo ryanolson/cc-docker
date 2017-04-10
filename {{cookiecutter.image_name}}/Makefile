@@ -2,7 +2,11 @@ BASE_IMAGE ?= {{ cookiecutter.base_image }}
 IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
-CACHES = --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy}
+ifdef http_proxy
+  CACHES = --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy}
+else
+  CACHES =
+endif
 
 .PHONY: build release clean distclean
 
