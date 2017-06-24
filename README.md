@@ -6,7 +6,6 @@ Save time and typing by templating your Dockerfile builds.  The templates can be
 
 `pip install`:
   - [cookiecutter](https://github.com/audreyr/cookiecutter)
-  - [j2docker](https://github.com/ryanolson/j2docker)
   
 ## Quickstart
 
