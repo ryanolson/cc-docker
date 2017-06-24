@@ -13,7 +13,8 @@ endif
 default: clean build
 
 Dockerfile: Dockerfile.j2
-	j2docker --base-image=${BASE_IMAGE} Dockerfile.j2
+	echo FROM ${BASE_IMAGE} > Dockerfile
+	cat Dockerfile.j2 >> Dockerfile
 
 build: Dockerfile
 	docker build ${CACHES} -t ${IMAGE_NAME} . 
