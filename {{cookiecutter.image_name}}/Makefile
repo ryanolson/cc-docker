@@ -2,11 +2,8 @@ BASE_IMAGE ?= {{ cookiecutter.base_image }}
 IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
-ifdef http_proxy
-  CACHES = --build-arg http_proxy=${http_proxy} --build-arg https_proxy=${https_proxy}
-else
-  CACHES =
-endif
+APT_PROXY ?= "false"
+CACHE="RUN echo 'Acquire::HTTP::Proxy \"${APT_PROXY}\";' >> /etc/apt/apt.conf.d/01proxy"
 
 .PHONY: build tag push release clean distclean
 
@@ -14,8 +11,10 @@ default: clean build
 
 build: 
 	@echo FROM ${BASE_IMAGE} > .Dockerfile
+	@echo ${CACHE} >> .Dockerfile
 	@cat Dockerfile >> .Dockerfile
-	docker build ${CACHES} -t ${IMAGE_NAME} -f .Dockerfile . 
+	@echo "RUN rm -f /etc/apt/apt.conf.d/01proxy" >> .Dockerfile
+	docker build -t ${IMAGE_NAME} -f .Dockerfile . 
 
 tag: build
 	docker tag ${IMAGE_NAME} ${RELEASE_IMAGE}
@@ -31,5 +30,6 @@ clean:
 	@docker rmi `docker images -q -f "dangling=true"` 2> /dev/null ||:
 
 distclean: clean
+	@docker rmi ${BASE_IMAGE} 2> /dev/null ||:
 	@docker rmi ${IMAGE_NAME} 2> /dev/null ||:
 	@docker rmi ${RELEASE_IMAGE} 2> /dev/null ||:
