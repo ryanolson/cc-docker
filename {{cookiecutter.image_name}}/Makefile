@@ -9,7 +9,7 @@ CACHE="RUN echo 'Acquire::HTTP::Proxy \"${APT_PROXY}\";' >> /etc/apt/apt.conf.d/
 
 default: clean build
 
-build: 
+build: Dockerfile
 	@echo FROM ${BASE_IMAGE} > .Dockerfile
 	@echo ${CACHE} >> .Dockerfile
 	@cat Dockerfile >> .Dockerfile
