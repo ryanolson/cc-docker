@@ -3,7 +3,13 @@ IMAGE_NAME ?= {{ cookiecutter.image_name }}
 RELEASE_IMAGE ?= {{ cookiecutter.release_image }}
 
 APT_PROXY ?= "false"
-CACHE="RUN echo 'Acquire::HTTP::Proxy \"${APT_PROXY}\";' >> /etc/apt/apt.conf.d/01proxy"
+APT_CACHE="RUN echo 'Acquire::HTTP::Proxy \"${APT_PROXY}\";' >> /etc/apt/apt.conf.d/01proxy"
+ifdef PYPI_PROXY
+PYPI_CACHE="RUN mkdir -p ~/.pip && echo [global] > ~/.pip/pip.conf && echo trusted-host = ${PYPI_PROXY} >> ~/.pip/pip.conf && echo index-url = http://${PYPI_PROXY}:3141/root/pypi/+simple/ >> ~/.pip/pip.conf"
+else
+PYPI_CACHE=""
+endif
+
 
 .PHONY: build tag push release clean distclean
 
@@ -11,9 +17,11 @@ default: clean build
 
 build: Dockerfile
 	@echo FROM ${BASE_IMAGE} > .Dockerfile
-	@echo ${CACHE} >> .Dockerfile
+	@echo ${APT_CACHE} >> .Dockerfile
+	@echo ${PYPI_CACHE} >> .Dockerfile
 	@cat Dockerfile >> .Dockerfile
 	@echo "RUN rm -f /etc/apt/apt.conf.d/01proxy" >> .Dockerfile
+	@echo "RUN rm -rf ~/.pip" >> .Dockerfile
 	docker build -t ${IMAGE_NAME} -f .Dockerfile . 
 
 tag: build
@@ -30,6 +38,5 @@ clean:
 	@docker rmi `docker images -q -f "dangling=true"` 2> /dev/null ||:
 
 distclean: clean
-	@docker rmi ${BASE_IMAGE} 2> /dev/null ||:
 	@docker rmi ${IMAGE_NAME} 2> /dev/null ||:
 	@docker rmi ${RELEASE_IMAGE} 2> /dev/null ||:
